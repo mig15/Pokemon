@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ActivityCard extends AppCompatActivity {
 
@@ -30,6 +32,11 @@ public class ActivityCard extends AppCompatActivity {
 
     @BindDrawable(R.drawable.ic_add) Drawable save;
     @BindDrawable(R.drawable.ic_delete) Drawable delete;
+
+    @OnClick(R.id.iv_database_activity_card)
+    public void onDataBase() {
+        Log.d("---My Log---", "click");
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
