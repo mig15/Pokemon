@@ -33,13 +33,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //Только если первый запуск приложения
-        if (firstStart) {
-            Fragment fragment = getCurrentFragment();
-            Discover page = (Discover) fragment;
-            page.viewIsReady();
-            firstStart = false;
-        }
     }
 
     @Override

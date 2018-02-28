@@ -52,6 +52,7 @@ public class Discover extends Fragment {
                 presenter.onScroll(dy);
             }
         });
+        presenter.viewReady();
         return v;
     }
 
