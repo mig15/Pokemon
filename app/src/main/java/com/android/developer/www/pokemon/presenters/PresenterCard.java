@@ -3,6 +3,7 @@ package com.android.developer.www.pokemon.presenters;
 import android.util.Log;
 
 import com.android.developer.www.pokemon.ActivityCard;
+import com.android.developer.www.pokemon.data.Pokemon;
 import com.android.developer.www.pokemon.data.PokemonExtra;
 import com.android.developer.www.pokemon.models.ModelCard;
 
@@ -21,6 +22,8 @@ public class PresenterCard {
 
     private ActivityCard view;
     private ModelCard model;
+
+    private boolean havePokemon;
 
     public PresenterCard(ModelCard model) {
         this.model = model;
@@ -54,8 +57,15 @@ public class PresenterCard {
                     PokemonExtra pokemon = model.getPokemonStatsFromJson(jsonResponse);
                     setPokemonInfo(pokemon);
                 } catch (IOException e) {
-                    view.showError();
+                    throw new RuntimeException("Error");
                 }
+
+                /*model.checkPokemon("", new ModelCard.CompleteCheck() {
+                    @Override
+                    public void onComplete(boolean result) {
+
+                    }
+                });*/
             }
 
             @Override
@@ -96,7 +106,15 @@ public class PresenterCard {
     }
 
     public void onDataBase() {
-       /* String name = view.getPokemonName();
+        if (havePokemon) {
+            deletePokemon();
+        } else {
+            writePokemon();
+        }
+    }
+
+    private void writePokemon() {
+        String name = view.getPokemonName();
         String url = POKEMON_URL + view.getPokemonId();
         Pokemon pokemon = new Pokemon();
         pokemon.setName(name);
@@ -104,8 +122,20 @@ public class PresenterCard {
         model.addPokemon(pokemon, new ModelCard.CompleteCallback() {
             @Override
             public void onComplete() {
-                view.showToast("Покемон добавлен");
+                view.showToast("Покемон добавлен в покедекс");
+                view.setDeleteIcon();
             }
-        });*/
+        });
+    }
+
+    private void deletePokemon() {
+        String name = view.getPokemonName();
+        model.removePokemon(name, new ModelCard.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                view.showToast("Покемон удален из покедекса");
+                view.setSaveIcon();
+            }
+        });
     }
 }

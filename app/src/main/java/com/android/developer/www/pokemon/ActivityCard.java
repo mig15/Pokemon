@@ -60,8 +60,6 @@ public class ActivityCard extends AppCompatActivity {
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv_photo);
-
-        //TODO показывать только после того как получен ответ.
     }
 
     public void setName(String name) {
@@ -86,6 +84,14 @@ public class ActivityCard extends AppCompatActivity {
 
     public String getPokemonName() {
         return tv_name.getText().toString();
+    }
+
+    public void setDeleteIcon() {
+        iv_db.setBackground(delete);
+    }
+
+    public void setSaveIcon() {
+        iv_db.setBackground(save);
     }
 
     public void showLoad() {

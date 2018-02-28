@@ -15,8 +15,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    private boolean firstStart = true;
-
     @BindView(R.id.tablayout_activity_main) TabLayout tabLayout;
     @BindView(R.id.pager_activity_main) ViewPager pager;
 

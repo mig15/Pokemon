@@ -64,7 +64,7 @@ public class ModelCard {
             }
             pokemonExtra.setStats(statsList);
         } catch (JSONException e) {
-            //TODO
+            throw new RuntimeException("Error");
         }
         return pokemonExtra;
     }
@@ -74,9 +74,9 @@ public class ModelCard {
         task.execute(pokemon);
     }
 
-    public void removePokemon(CompleteCallback completeCallback) {
+    public void removePokemon(String name, CompleteCallback completeCallback) {
         RemovePokemonTask task = new RemovePokemonTask(completeCallback);
-        task.execute();
+        task.execute(name);
     }
 
     public void checkPokemon(String name, CompleteCheck completeCallback) {
@@ -119,7 +119,7 @@ public class ModelCard {
         }
     }
 
-    private class RemovePokemonTask extends AsyncTask<Void, Void, Void> {
+    private class RemovePokemonTask extends AsyncTask<String, Void, Void> {
 
         private final CompleteCallback callback;
 
@@ -128,9 +128,9 @@ public class ModelCard {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            //TODO
-            dbHelper.getWritableDatabase().delete(PokemonTable.TABLE, null, null);
+        protected Void doInBackground(String... params) {
+            dbHelper.getWritableDatabase()
+                    .delete(PokemonTable.TABLE, "name = ?" + params[0], null);
             dbHelper.close();
             return null;
         }
