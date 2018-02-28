@@ -130,7 +130,8 @@ public class ModelCard {
         @Override
         protected Void doInBackground(String... params) {
             dbHelper.getWritableDatabase()
-                    .delete(PokemonTable.TABLE, "name = ?" + params[0], null);
+                    .delete(PokemonTable.TABLE,
+                            PokemonTable.COLUMN_NAME + " = ? ", new String[] {params[0]});
             dbHelper.close();
             return null;
         }

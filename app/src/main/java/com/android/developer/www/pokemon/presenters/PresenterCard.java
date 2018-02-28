@@ -55,17 +55,23 @@ public class PresenterCard {
                 try {
                     String jsonResponse = response.body().string();
                     PokemonExtra pokemon = model.getPokemonStatsFromJson(jsonResponse);
+
+                    model.checkPokemon(pokemon.getName(), new ModelCard.CompleteCheck() {
+                        @Override
+                        public void onComplete(boolean result) {
+                            havePokemon = result;
+                            if (result) {
+                                view.setDeleteIcon();
+                            } else {
+                                view.setSaveIcon();
+                            }
+                        }
+                    });
+
                     setPokemonInfo(pokemon);
                 } catch (IOException e) {
                     throw new RuntimeException("Error");
                 }
-
-                /*model.checkPokemon("", new ModelCard.CompleteCheck() {
-                    @Override
-                    public void onComplete(boolean result) {
-
-                    }
-                });*/
             }
 
             @Override
