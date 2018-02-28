@@ -3,9 +3,12 @@ package com.android.developer.www.pokemon;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +28,13 @@ public class ActivityCard extends AppCompatActivity {
     private PresenterCard presenter;
 
     @BindView(R.id.iv_pokemon_photo_activity_card) ImageView iv_photo;
+    @BindView(R.id.layout_stats_activity_card) ConstraintLayout layoutStats;
+    @BindView(R.id.layout_abilities_activity_card) ConstraintLayout layoutAbilities;
     @BindView(R.id.tv_name_activity_card) TextView tv_name;
     @BindView(R.id.iv_database_activity_card) ImageView iv_db;
     @BindView(R.id.tv_characteristics_activity_card) TextView tv_characteristics;
     @BindView(R.id.tv_spells_activity_card) TextView tv_spells;
+    @BindView(R.id.progress_pokemon_card) ProgressBar progress;
 
     @BindDrawable(R.drawable.ic_add) Drawable save;
     @BindDrawable(R.drawable.ic_delete) Drawable delete;
@@ -62,12 +68,42 @@ public class ActivityCard extends AppCompatActivity {
         tv_name.setText(name);
     }
 
+    public void setStats(String characteristics) {
+        tv_characteristics.setText(characteristics);
+    }
+
+    public void setAbilities(String abilities) {
+        tv_spells.setText(abilities);
+    }
+
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     public int getPokemonId() {
         return getIntent().getIntExtra(RecyclerAdapter.KEY, 0);
+    }
+
+    public void showLoad() {
+        iv_db.setVisibility(View.GONE);
+        layoutStats.setVisibility(View.GONE);
+        layoutAbilities.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    public void showData() {
+        progress.setVisibility(View.GONE);
+        iv_db.setVisibility(View.VISIBLE);
+        layoutStats.setVisibility(View.VISIBLE);
+        layoutAbilities.setVisibility(View.VISIBLE);
+    }
+
+    public void showError() {
+        tv_name.setText("Неопознанный покемон");
+        iv_db.setVisibility(View.GONE);
+        layoutStats.setVisibility(View.GONE);
+        layoutAbilities.setVisibility(View.GONE);
+        progress.setVisibility(View.GONE);
     }
 
     @Override

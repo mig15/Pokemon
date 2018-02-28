@@ -6,13 +6,7 @@ import com.android.developer.www.pokemon.ActivityCard;
 import com.android.developer.www.pokemon.data.PokemonExtra;
 import com.android.developer.www.pokemon.models.ModelCard;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +30,7 @@ public class PresenterCard {
 
     public void viewReady() {
         sendRequest();
+        view.showLoad();
     }
 
     public void detachView() {
@@ -49,13 +44,14 @@ public class PresenterCard {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     //TODO
-                    //throw new IOException("Unexpected code " + response);
+                    view.showError();
+                    return;
                 }
 
                 try {
-                    String s = response.body().string();
-                    PokemonExtra pokemon = getPokemonStatsFromJson(s);
-                    setInfo(pokemon);
+                    String jsonResponse = response.body().string();
+                    PokemonExtra pokemon = model.getPokemonStatsFromJson(jsonResponse);
+                    setPokemonInfo(pokemon);
                 } catch (IOException e) {
                     //TODO
                     Log.d("---My Log---", "catch");
@@ -65,69 +61,35 @@ public class PresenterCard {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("---My Log---", "onFailure");
+                view.showError();
             }
         });
     }
 
-    private PokemonExtra getPokemonStatsFromJson(String jsonResponse) {
-        PokemonExtra pokemonExtra = new PokemonExtra();
-        Map<String, Integer> statsList = new HashMap<>();
-        List<String> abilitiesList = new ArrayList<>();
-
-        try {
-            JSONObject fullObject = new JSONObject(jsonResponse);
-
-            pokemonExtra.setName(fullObject.getString("name"));
-
-            JSONArray abilities = fullObject.getJSONArray("abilities");
-            for (int i = 0; i < abilities.length(); i++) {
-                JSONObject innerObject = abilities.getJSONObject(i);
-                String abilityName = innerObject.getJSONObject("ability").getString("name");
-                abilitiesList.add(abilityName);
-            }
-            pokemonExtra.setAbilities(abilitiesList);
-
-            JSONArray stats = fullObject.getJSONArray("stats");
-            for (int i = 0; i < stats.length(); i++) {
-                JSONObject innerObject = stats.getJSONObject(i);
-                String name = innerObject.getJSONObject("stat").getString("name");
-                int value = innerObject.getInt("base_stat");
-                statsList.put(name, value);
-            }
-            pokemonExtra.setStats(statsList);
-        } catch (JSONException e) {
-            //TODO
-        }
-        return pokemonExtra;
-    }
-
-    private void setInfo(PokemonExtra pokemon) {
+    private void setPokemonInfo(PokemonExtra pokemon) {
         view.setName(pokemon.getName());
+        view.setStats(getPokemonStats(pokemon));
+        view.setAbilities(getPokemonAbilities(pokemon));
+        view.showData();
     }
 
-    private void ff(String veryLongString) {
-        int maxLogSize = 1000;
-        for(int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
-            int start = i * maxLogSize;
-            int end = (i+1) * maxLogSize;
-            end = end > veryLongString.length() ? veryLongString.length() : end;
-            Log.d("---My Log---", veryLongString.substring(start, end));
-        }
+    private String getPokemonStats(PokemonExtra pokemon) {
+        Map<String, Integer> stats = pokemon.getStats();
+
+        String hitPoints = "hp = " + stats.get("hp");
+        String speed = "speed = " + stats.get("speed");
+        String attack = "special-attack = " + stats.get("special-attack");
+        String defense = "special-defense = " + stats.get("special-defense");
+        return hitPoints + "\n" + speed + "\n" + attack + "\n" + defense;
     }
 
-    private void showPokemon(PokemonExtra pokemonExtra) {
-        String name = pokemonExtra.getName();
-        Log.d("---My Log---", "name " + name);
-        Map<String, Integer> stats = pokemonExtra.getStats();
+    private String getPokemonAbilities(PokemonExtra pokemon) {
+        List<String> abilitiesList = pokemon.getAbilities();
+        StringBuilder abilities = new StringBuilder();
 
-        for (Map.Entry<String, Integer> pair : stats.entrySet()) {
-            String key = pair.getKey();
-            Integer value = pair.getValue();
-            Log.d("---My Log---", "stat: " + key + " value " + value);
+        for (String ability : abilitiesList) {
+            abilities.append(ability).append("\n");
         }
-
-        for (String ability : pokemonExtra.getAbilities()) {
-            Log.d("---My Log---", "ability" + ability);
-        }
+        return abilities.toString();
     }
 }
