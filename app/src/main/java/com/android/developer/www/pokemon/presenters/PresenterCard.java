@@ -17,6 +17,8 @@ import retrofit2.Response;
 
 public class PresenterCard {
 
+    private static final String POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
+
     private ActivityCard view;
     private ModelCard model;
 
@@ -37,13 +39,12 @@ public class PresenterCard {
         view = null;
     }
 
-    public void sendRequest() {
+    private void sendRequest() {
         Call<ResponseBody> res = model.getRequest(view.getPokemonId());
         res.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
-                    //TODO
                     view.showError();
                     return;
                 }
@@ -53,8 +54,7 @@ public class PresenterCard {
                     PokemonExtra pokemon = model.getPokemonStatsFromJson(jsonResponse);
                     setPokemonInfo(pokemon);
                 } catch (IOException e) {
-                    //TODO
-                    Log.d("---My Log---", "catch");
+                    view.showError();
                 }
             }
 
@@ -76,11 +76,13 @@ public class PresenterCard {
     private String getPokemonStats(PokemonExtra pokemon) {
         Map<String, Integer> stats = pokemon.getStats();
 
-        String hitPoints = "hp = " + stats.get("hp");
-        String speed = "speed = " + stats.get("speed");
-        String attack = "special-attack = " + stats.get("special-attack");
-        String defense = "special-defense = " + stats.get("special-defense");
-        return hitPoints + "\n" + speed + "\n" + attack + "\n" + defense;
+        //TODO изучить
+        StringBuilder sb = new StringBuilder();
+        sb.append("hp = ").append(stats.get("hp")).append("\n");
+        sb.append("speed = ").append(stats.get("speed")).append("\n");
+        sb.append("special-attack = ").append(stats.get("special-attack")).append("\n");
+        sb.append("special-defense = ").append(stats.get("special-defense"));
+        return sb.toString();
     }
 
     private String getPokemonAbilities(PokemonExtra pokemon) {
@@ -91,5 +93,19 @@ public class PresenterCard {
             abilities.append(ability).append("\n");
         }
         return abilities.toString();
+    }
+
+    public void onDataBase() {
+       /* String name = view.getPokemonName();
+        String url = POKEMON_URL + view.getPokemonId();
+        Pokemon pokemon = new Pokemon();
+        pokemon.setName(name);
+        pokemon.setUrl(url);
+        model.addPokemon(pokemon, new ModelCard.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                view.showToast("Покемон добавлен");
+            }
+        });*/
     }
 }

@@ -1,6 +1,13 @@
 package com.android.developer.www.pokemon.models;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.os.AsyncTask;
+
+import com.android.developer.www.pokemon.data.Pokemon;
 import com.android.developer.www.pokemon.data.PokemonExtra;
+import com.android.developer.www.pokemon.database.DBHelper;
+import com.android.developer.www.pokemon.database.PokemonTable;
 import com.android.developer.www.pokemon.retrofit.PokeRetrofit;
 import com.android.developer.www.pokemon.retrofit.PokemonApi;
 
@@ -17,6 +24,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class ModelCard {
+
+    private DBHelper dbHelper;
+
+    public ModelCard(DBHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
 
     public Call<ResponseBody> getRequest(int id) {
         PokemonApi service = PokeRetrofit.getInstance().getRetrofit().create(PokemonApi.class);
@@ -54,5 +67,112 @@ public class ModelCard {
             //TODO
         }
         return pokemonExtra;
+    }
+
+    public void addPokemon(Pokemon pokemon, CompleteCallback callback) {
+        AddPokemonTask task = new AddPokemonTask(callback);
+        task.execute(pokemon);
+    }
+
+    public void removePokemon(CompleteCallback completeCallback) {
+        RemovePokemonTask task = new RemovePokemonTask(completeCallback);
+        task.execute();
+    }
+
+    public void checkPokemon(String name, CompleteCheck completeCallback) {
+        CheckPokemonTask task = new CheckPokemonTask(completeCallback);
+        task.execute(name);
+    }
+
+    public interface CompleteCallback {
+        void onComplete();
+    }
+
+    public interface CompleteCheck {
+        void onComplete(boolean result);
+    }
+
+    private class AddPokemonTask extends AsyncTask<Pokemon, Void, Void> {
+
+        private final CompleteCallback callback;
+
+        AddPokemonTask(CompleteCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Void doInBackground(Pokemon... params) {
+            ContentValues cv = new ContentValues();
+            cv.put(PokemonTable.COLUMN_NAME, params[0].getName());
+            cv.put(PokemonTable.COLUMN_URL, params[0].getUrl());
+            dbHelper.getWritableDatabase().insert(PokemonTable.TABLE, null, cv);
+            dbHelper.close();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (callback != null) {
+                callback.onComplete();
+            }
+        }
+    }
+
+    private class RemovePokemonTask extends AsyncTask<Void, Void, Void> {
+
+        private final CompleteCallback callback;
+
+        RemovePokemonTask(CompleteCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            //TODO
+            dbHelper.getWritableDatabase().delete(PokemonTable.TABLE, null, null);
+            dbHelper.close();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (callback != null) {
+                callback.onComplete();
+            }
+        }
+    }
+
+    private class CheckPokemonTask extends AsyncTask<String, Void, Boolean> {
+
+        private final CompleteCheck callback;
+
+        CheckPokemonTask(CompleteCheck callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            boolean found;
+            String sql = "SELECT * FROM "
+                    + PokemonTable.TABLE
+                    + " WHERE "
+                    + PokemonTable.COLUMN_NAME
+                    + " = ?";
+            Cursor c = dbHelper.getWritableDatabase().rawQuery(sql, new String[] {params[0]});
+            found = c.moveToFirst();
+            c.close();
+            dbHelper.close();
+            return found;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (callback != null) {
+                callback.onComplete(result);
+            }
+        }
     }
 }

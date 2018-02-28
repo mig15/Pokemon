@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.developer.www.pokemon.adapters.recycler.RecyclerAdapter;
+import com.android.developer.www.pokemon.database.DBHelper;
 import com.android.developer.www.pokemon.models.ModelCard;
 import com.android.developer.www.pokemon.presenters.PresenterCard;
 import com.bumptech.glide.Glide;
@@ -41,7 +41,7 @@ public class ActivityCard extends AppCompatActivity {
 
     @OnClick(R.id.iv_database_activity_card)
     public void onDataBase() {
-        Log.d("---My Log---", "click");
+        presenter.onDataBase();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ActivityCard extends AppCompatActivity {
         setContentView(R.layout.activity_pokemon_card);
         ButterKnife.bind(this);
 
-        presenter = new PresenterCard(new ModelCard());
+        presenter = new PresenterCard(new ModelCard(new DBHelper(this)));
         presenter.attachView(this);
         presenter.viewReady();
 
@@ -82,6 +82,10 @@ public class ActivityCard extends AppCompatActivity {
 
     public int getPokemonId() {
         return getIntent().getIntExtra(RecyclerAdapter.KEY, 0);
+    }
+
+    public String getPokemonName() {
+        return tv_name.getText().toString();
     }
 
     public void showLoad() {

@@ -3,7 +3,7 @@ package com.android.developer.www.pokemon.fragments.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +44,7 @@ public class Pokedex extends Fragment {
 
         adapter = new RecyclerAdapter(getContext());
         recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
         return v;
     }
 
