@@ -48,7 +48,10 @@ public class Pokedex extends Fragment {
         return v;
     }
 
-    public void viewIsReady() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("---My Log---", "onResumePokedex");
         presenter.viewReady();
     }
 
@@ -56,6 +59,7 @@ public class Pokedex extends Fragment {
         progressBar.setVisibility(View.GONE);
         tv_not_data.setVisibility(View.GONE);
         recycler.setVisibility(View.VISIBLE);
+        adapter.clearData();
         adapter.setPokemons(pokemons);
         adapter.notifyDataSetChanged();
     }

@@ -48,6 +48,7 @@ public class PresenterCard {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
+                    Log.d("---My Log---", "not successful");
                     view.showError();
                     return;
                 }
@@ -55,19 +56,7 @@ public class PresenterCard {
                 try {
                     String jsonResponse = response.body().string();
                     PokemonExtra pokemon = model.getPokemonStatsFromJson(jsonResponse);
-
-                    model.checkPokemon(pokemon.getName(), new ModelCard.CompleteCheck() {
-                        @Override
-                        public void onComplete(boolean result) {
-                            havePokemon = result;
-                            if (result) {
-                                view.setDeleteIcon();
-                            } else {
-                                view.setSaveIcon();
-                            }
-                        }
-                    });
-
+                    verifyPokemon(pokemon);
                     setPokemonInfo(pokemon);
                 } catch (IOException e) {
                     throw new RuntimeException("Error");
@@ -78,6 +67,20 @@ public class PresenterCard {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("---My Log---", "onFailure");
                 view.showError();
+            }
+        });
+    }
+
+    private void verifyPokemon(PokemonExtra pokemon) {
+        model.checkPokemon(pokemon.getName(), new ModelCard.CompleteCheck() {
+            @Override
+            public void onComplete(boolean result) {
+                havePokemon = result;
+                if (result) {
+                    view.setDeleteIcon();
+                } else {
+                    view.setSaveIcon();
+                }
             }
         });
     }

@@ -7,13 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.android.developer.www.pokemon.adapters.pager.PagerAdapter;
-import com.android.developer.www.pokemon.fragments.main.Discover;
-import com.android.developer.www.pokemon.fragments.main.Pokedex;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.tablayout_activity_main) TabLayout tabLayout;
     @BindView(R.id.pager_activity_main) ViewPager pager;
@@ -25,28 +23,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ButterKnife.bind(this);
 
         pager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        pager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(pager);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        Fragment fragment = getCurrentFragment();
-        if (position == 0) {
-            Discover page = (Discover) fragment;
-            page.viewIsReady();
-        } else {
-            Pokedex page = (Pokedex) fragment;
-            page.viewIsReady();
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
     }
 
     private Fragment getCurrentFragment() {

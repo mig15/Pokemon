@@ -38,6 +38,25 @@ public class PresenterDiscover {
         view = null;
     }
 
+    public void onScroll(int dy) {
+        //Если recycler листают вниз
+        if (dy > 0) {
+            int visibleItemCount = view.getVisibleItems();
+            int totalItemCount = view.getTotalItems();
+            int pastVisibleItems = view.getPastItems();
+
+            //Дожидаемся ответа если был запрос на предыдущем пролистывании
+            if (wasResponse) {
+                //Если на экране уже видны все элементы
+                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                    wasResponse = false;
+                    offset += 20;
+                    sendRequest();
+                }
+            }
+        }
+    }
+
     private void sendRequest() {
         Call<PokemonRepository> respuestaCall = model.getRequest(offset);
         respuestaCall.enqueue(new Callback<PokemonRepository>() {
@@ -46,6 +65,7 @@ public class PresenterDiscover {
                 wasResponse = true;
 
                 if (!response.isSuccessful()) {
+                    Log.d("---My Log---", "not successful");
                     wasResponse = true;
                     view.showError();
                     return;
@@ -66,24 +86,5 @@ public class PresenterDiscover {
                 view.showError();
             }
         });
-    }
-
-    public void onScroll(int dy) {
-        //Если recycler листают вниз
-        if (dy > 0) {
-            int visibleItemCount = view.getVisibleItems();
-            int totalItemCount = view.getTotalItems();
-            int pastVisibleItems = view.getPastItems();
-
-            //Дожидаемся ответа если был запрос на предыдущем пролистывании
-            if (wasResponse) {
-                //Если на экране уже видны все элементы
-                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                    wasResponse = false;
-                    offset += 20;
-                    sendRequest();
-                }
-            }
-        }
     }
 }

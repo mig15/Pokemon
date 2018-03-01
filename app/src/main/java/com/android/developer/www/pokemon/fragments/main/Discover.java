@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +57,6 @@ public class Discover extends Fragment {
         return v;
     }
 
-    public void viewIsReady() {
-        presenter.viewReady();
-    }
-
     public void showList(List<Pokemon> pokemons) {
         progressBar.setVisibility(View.GONE);
         tv_not_data.setVisibility(View.GONE);
@@ -97,5 +94,6 @@ public class Discover extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         presenter.detachView();
+        Log.d("---My Log---", "onDestroy Discover");
     }
 }
