@@ -3,6 +3,7 @@ package com.android.developer.www.pokemon.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -25,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(PokemonTable.CREATE_SCRIPT);
+        Log.d("---My Log---", "onCreate DB");
     }
 
     @Override

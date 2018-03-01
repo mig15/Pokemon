@@ -95,7 +95,6 @@ public class PresenterCard {
     private String getPokemonStats(PokemonExtra pokemon) {
         Map<String, Integer> stats = pokemon.getStats();
 
-        //TODO изучить
         StringBuilder sb = new StringBuilder();
         sb.append("hp = ").append(stats.get("hp")).append("\n");
         sb.append("speed = ").append(stats.get("speed")).append("\n");
@@ -133,6 +132,7 @@ public class PresenterCard {
             public void onComplete() {
                 view.showToast("Покемон добавлен в покедекс");
                 view.setDeleteIcon();
+                havePokemon = true;
             }
         });
     }
@@ -144,6 +144,7 @@ public class PresenterCard {
             public void onComplete() {
                 view.showToast("Покемон удален из покедекса");
                 view.setSaveIcon();
+                havePokemon = false;
             }
         });
     }
