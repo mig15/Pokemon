@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pokemon</string>
+    <string name="app_name">Pokedex</string>
     
     <string name="discover">Discover</string>
     <string name="pokedex">Pokedex</string>

@@ -29,7 +29,7 @@ public class Pokedex extends Fragment {
     private PresenterPokedex presenter;
     private RecyclerAdapter adapter;
 
-    @BindView(R.id.recycler_pokemon_list_main_layout) RecyclerView recycler;
+    @BindView(R.id.recycler_pokemon_list_layout) RecyclerView recycler;
     @BindView(R.id.tv_not_data_pokemon_list_layout) TextView tv_not_data;
     @BindView(R.id.progress_pokemon_list_layout) ProgressBar progressBar;
 
