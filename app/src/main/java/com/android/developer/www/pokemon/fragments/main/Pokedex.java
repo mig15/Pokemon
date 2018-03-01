@@ -39,7 +39,7 @@ public class Pokedex extends Fragment {
         View v = inflater.inflate(R.layout.pokemon_list_layout, container, false);
         ButterKnife.bind(this, v);
 
-        presenter = new PresenterPokedex(new ModelPokedex(new DBHelper(getContext())));
+        presenter = new PresenterPokedex(new ModelPokedex(DBHelper.getInstance(getContext())));
         presenter.attachView(this);
 
         adapter = new RecyclerAdapter(getContext());

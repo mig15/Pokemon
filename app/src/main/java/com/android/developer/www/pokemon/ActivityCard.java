@@ -51,7 +51,7 @@ public class ActivityCard extends AppCompatActivity {
         setContentView(R.layout.activity_pokemon_card);
         ButterKnife.bind(this);
 
-        presenter = new PresenterCard(new ModelCard(new DBHelper(this)));
+        presenter = new PresenterCard(new ModelCard(DBHelper.getInstance(this)));
         presenter.attachView(this);
         presenter.viewReady();
 

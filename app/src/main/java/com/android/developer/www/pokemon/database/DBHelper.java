@@ -6,20 +6,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String NAME = "pokemon";
-    public static final int VERSION = 1;
+    private static final String NAME = "pokemon";
+    private static final int VERSION = 1;
 
-    public DBHelper(Context context) {
+    private static DBHelper ourInstance = null;
+
+    public static DBHelper getInstance(Context context) {
+        if (ourInstance == null) {
+            ourInstance = new DBHelper(context);
+        }
+        return ourInstance;
+    }
+
+    private DBHelper(Context context) {
         super(context, NAME, null, VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(PokemonTable.CREATE_SCRIPT);
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(PokemonTable.CREATE_SCRIPT);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 }
