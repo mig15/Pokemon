@@ -67,7 +67,7 @@ public class PresenterDiscover {
                 if (!response.isSuccessful()) {
                     Log.d("---My Log---", "not successful");
                     wasResponse = true;
-                    view.showError();
+                    if (view != null) view.showError();
                     return;
                 }
 
@@ -75,7 +75,7 @@ public class PresenterDiscover {
                 List<Pokemon> pokemons = rep.getResults();
 
                 if (pokemons != null && !pokemons.isEmpty()) {
-                    view.showList(pokemons);
+                    if (view != null) view.showList(pokemons);
                 }
             }
 
@@ -83,7 +83,7 @@ public class PresenterDiscover {
             public void onFailure(Call<PokemonRepository> call, Throwable t) {
                 Log.d("---My Log---", "onFailure");
                 wasResponse = true;
-                view.showError();
+                if (view != null) view.showError();
             }
         });
     }

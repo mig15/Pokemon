@@ -39,6 +39,7 @@ public class PresenterCard {
     }
 
     public void detachView() {
+        model.cancelWork();
         view = null;
     }
 
@@ -49,6 +50,7 @@ public class PresenterCard {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     Log.d("---My Log---", "not successful");
+                    if (view == null) return;
                     view.showError();
                     return;
                 }
@@ -66,6 +68,7 @@ public class PresenterCard {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("---My Log---", "onFailure");
+                if (view == null) return;
                 view.showError();
             }
         });
@@ -75,6 +78,7 @@ public class PresenterCard {
         model.checkPokemon(pokemon.getName(), new ModelCard.CompleteCheck() {
             @Override
             public void onComplete(boolean result) {
+                if (view == null) return;
                 havePokemon = result;
                 if (result) {
                     view.setDeleteIcon();
@@ -86,6 +90,7 @@ public class PresenterCard {
     }
 
     private void setPokemonInfo(PokemonExtra pokemon) {
+        if (view == null) return;
         view.setName(pokemon.getName());
         view.setStats(getPokemonStats(pokemon));
         view.setAbilities(getPokemonAbilities(pokemon));
@@ -130,6 +135,7 @@ public class PresenterCard {
         model.addPokemon(pokemon, new ModelCard.CompleteCallback() {
             @Override
             public void onComplete() {
+                if (view == null) return;
                 view.showToast("Покемон добавлен в покедекс");
                 view.setDeleteIcon();
                 havePokemon = true;
@@ -142,6 +148,7 @@ public class PresenterCard {
         model.removePokemon(name, new ModelCard.CompleteCallback() {
             @Override
             public void onComplete() {
+                if (view == null) return;
                 view.showToast("Покемон удален из покедекса");
                 view.setSaveIcon();
                 havePokemon = false;

@@ -13,14 +13,19 @@ import java.util.List;
 public class ModelPokedex {
 
     private DBHelper dbHelper;
+    private ReadPokemonsTask readTask;
 
     public ModelPokedex(DBHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
 
     public void readPokemons(ReadPokemonsCallback callback) {
-        ReadPokemonsTask task = new ReadPokemonsTask(callback);
-        task.execute();
+        readTask = new ReadPokemonsTask(callback);
+        readTask.execute();
+    }
+
+    public void cancelWork(){
+        if (readTask != null && !readTask.isCancelled()) readTask.cancel(true);
     }
 
     public interface ReadPokemonsCallback {

@@ -26,6 +26,9 @@ import retrofit2.Call;
 public class ModelCard {
 
     private DBHelper dbHelper;
+    private RemovePokemonTask removeTask;
+    private CheckPokemonTask checkTask;
+    private AddPokemonTask addTask;
 
     public ModelCard(DBHelper dbHelper) {
         this.dbHelper = dbHelper;
@@ -70,18 +73,24 @@ public class ModelCard {
     }
 
     public void addPokemon(Pokemon pokemon, CompleteCallback callback) {
-        AddPokemonTask task = new AddPokemonTask(callback);
-        task.execute(pokemon);
+        addTask = new AddPokemonTask(callback);
+        addTask.execute(pokemon);
     }
 
     public void removePokemon(String name, CompleteCallback completeCallback) {
-        RemovePokemonTask task = new RemovePokemonTask(completeCallback);
-        task.execute(name);
+        removeTask = new RemovePokemonTask(completeCallback);
+        removeTask.execute(name);
     }
 
     public void checkPokemon(String name, CompleteCheck completeCallback) {
-        CheckPokemonTask task = new CheckPokemonTask(completeCallback);
-        task.execute(name);
+        checkTask = new CheckPokemonTask(completeCallback);
+        checkTask.execute(name);
+    }
+
+    public void cancelWork() {
+        if (checkTask != null && !checkTask.isCancelled()) checkTask.cancel(true);
+        if (removeTask != null && !removeTask.isCancelled()) removeTask.cancel(true);
+        if (addTask != null && !addTask.isCancelled()) addTask.cancel(true);
     }
 
     public interface CompleteCallback {

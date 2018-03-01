@@ -25,6 +25,7 @@ public class PresenterPokedex {
     }
 
     public void detachView() {
+        model.cancelWork();
         view = null;
     }
 
@@ -32,6 +33,7 @@ public class PresenterPokedex {
         model.readPokemons(new ModelPokedex.ReadPokemonsCallback() {
             @Override
             public void onLoad(List<Pokemon> pokemons) {
+                if (view == null) return;
                 if (!pokemons.isEmpty()) {
                     view.showList(pokemons);
                 } else {
