@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.presentation.feature.pokemon.di
+package ru.androiddev.pokemon.presentation.feature.pokemon.di.pokemon
 
 import dagger.Module
 import dagger.Provides

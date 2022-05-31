@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import ru.androiddev.pokemon.presentation.MyApplication
+import ru.androiddev.pokemon.presentation.di.module.ActivityBindingModule
 import ru.androiddev.pokemon.presentation.di.module.FragmentBindingModule
 import ru.androiddev.pokemon.presentation.di.module.NetworkModule
 import ru.androiddev.pokemon.presentation.di.module.RepositoryModule
@@ -13,6 +14,7 @@ import ru.androiddev.pokemon.presentation.di.module.RepositoryModule
     NetworkModule::class,
     RepositoryModule::class,
     FragmentBindingModule::class,
+    ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
 ])
 interface ApplicationComponent {

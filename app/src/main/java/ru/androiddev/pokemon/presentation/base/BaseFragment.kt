@@ -2,6 +2,7 @@ package ru.androiddev.pokemon.presentation.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
@@ -24,5 +25,9 @@ abstract class BaseFragment<F : ViewModelProvider.Factory, V : BaseViewModel> : 
 
     protected fun setViewModel(klass: Class<V>) {
         viewModel = ViewModelProviders.of(this, viewModelFactory)[klass]
+    }
+
+    protected fun setViewModel(activity: FragmentActivity, klass: Class<V>) {
+        viewModel = ViewModelProviders.of(activity)[klass]
     }
 }
