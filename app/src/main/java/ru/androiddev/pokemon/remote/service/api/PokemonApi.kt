@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonRemoteEntity
+import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonRemoteExpandedStatsEntity
 import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsListRemoteEntity
 
 interface PokemonApi {
@@ -16,5 +16,5 @@ interface PokemonApi {
     ): Flow<PokemonsListRemoteEntity>
 
     @GET("pokemon/{number}")
-    fun getPokemon(@Path ("number") number: Int): Flow<PokemonRemoteEntity>
+    fun getPokemonExpandedStats(@Path ("number") number: Int): Flow<PokemonRemoteExpandedStatsEntity>
 }

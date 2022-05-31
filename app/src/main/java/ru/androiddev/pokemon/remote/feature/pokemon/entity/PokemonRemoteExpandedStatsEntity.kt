@@ -1,6 +1,6 @@
 package ru.androiddev.pokemon.remote.feature.pokemon.entity
 
-data class PokemonRemoteEntity(
+data class PokemonRemoteExpandedStatsEntity(
     val abilities: List<Ability>?,
     val moves: List<Move>?
 ) {
