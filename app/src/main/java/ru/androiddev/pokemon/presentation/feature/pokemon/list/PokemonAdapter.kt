@@ -1,28 +1,25 @@
 package ru.androiddev.pokemon.presentation.feature.pokemon.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.androiddev.pokemon.R
-import kotlinx.android.synthetic.main.item_pokemon.view.*
+import ru.androiddev.pokemon.databinding.ItemPokemonBinding
 
-class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
+class PokemonAdapter() : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
     val data: MutableList<PokemonItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        return PokemonViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_pokemon, parent, false)
-        )
+        val binding = ItemPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PokemonViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        with(holder.itemView) {
+        with(holder.viewBinding) {
             val model = data[position]
             itemPokemonName.text = data[position].name
 
-            setOnClickListener { model.onClick?.invoke(model.url) }
+            root.setOnClickListener { model.onClick?.invoke(model.url) }
         }
     }
 
@@ -37,5 +34,6 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() 
         notifyItemRangeInserted(newPosition - 1, data.size)
     }
 
-    inner class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    inner class PokemonViewHolder(val viewBinding: ItemPokemonBinding)
+        : RecyclerView.ViewHolder(viewBinding.root)
 }

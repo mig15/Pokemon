@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_pokemon.*
-import ru.androiddev.pokemon.R
+import ru.androiddev.pokemon.databinding.FragmentPokemonBinding
 import ru.androiddev.pokemon.presentation.base.BaseFragment
 import ru.androiddev.pokemon.presentation.feature.pokemon.list.PokemonAdapter
 import ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel.PokemonViewModel
@@ -18,24 +17,27 @@ class PokemonFragment : BaseFragment<PokemonViewModelFactory, PokemonViewModel>(
     private var adapter: PokemonAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
 
+    private lateinit var viewBinding: FragmentPokemonBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_pokemon, container, false)
+    ): View {
+        viewBinding = FragmentPokemonBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = PokemonAdapter()
-        fragmentPokemonList.adapter = adapter
-        fragmentPokemonList.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.fragmentPokemonList.adapter = adapter
+        viewBinding.fragmentPokemonList.layoutManager = LinearLayoutManager(requireContext())
 
-        layoutManager = fragmentPokemonList.layoutManager as LinearLayoutManager
+        layoutManager = viewBinding.fragmentPokemonList.layoutManager as LinearLayoutManager
 
         initLiveData()
 
-        fragmentPokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        viewBinding.fragmentPokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
