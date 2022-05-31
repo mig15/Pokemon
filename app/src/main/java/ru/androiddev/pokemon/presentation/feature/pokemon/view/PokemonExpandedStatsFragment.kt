@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.androiddev.pokemon.databinding.FragmentPokemonBinding
+import ru.androiddev.pokemon.databinding.FragmentPokemonExpandedStatsBinding
 import ru.androiddev.pokemon.presentation.base.BaseFragment
 import ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel.PokemonViewModel
 import ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel.PokemonViewModelFactory
 
 class PokemonExpandedStatsFragment  : BaseFragment<PokemonViewModelFactory, PokemonViewModel>() {
 
-    private lateinit var viewBinding: FragmentPokemonBinding
+    private lateinit var viewBinding: FragmentPokemonExpandedStatsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewBinding = FragmentPokemonBinding.inflate(inflater, container, false)
+        viewBinding = FragmentPokemonExpandedStatsBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 
@@ -27,6 +27,6 @@ class PokemonExpandedStatsFragment  : BaseFragment<PokemonViewModelFactory, Poke
     }
 
     override fun initViewModel() {
-        TODO("Not yet implemented")
+        setViewModel(PokemonViewModel::class.java)
     }
 }
