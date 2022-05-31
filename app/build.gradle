@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -33,6 +32,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -69,6 +71,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

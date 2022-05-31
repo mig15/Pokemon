@@ -23,6 +23,6 @@ abstract class BaseFragment<F : ViewModelProvider.Factory, V : BaseViewModel> : 
     abstract fun initViewModel()
 
     protected fun setViewModel(klass: Class<V>) {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(klass)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[klass]
     }
 }
