@@ -2,7 +2,7 @@ package ru.androiddev.pokemon.remote.feature.pokemon.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonsListRemoteEntity(
+data class PokemonsRemoteListEntity(
     val count: Int?,
     @SerializedName("next")
     val nextUrl: String?,
