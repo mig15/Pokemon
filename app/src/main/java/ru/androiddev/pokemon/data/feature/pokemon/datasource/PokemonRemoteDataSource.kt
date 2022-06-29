@@ -19,8 +19,8 @@ class PokemonRemoteDataSource @Inject constructor(
         return remote.getPokemons(limit, offset).map { mapper.mapFromRemote(it) }
     }
 
-    override suspend fun getPokemonExpandedStats(pokemonNumber: Int): Flow<PokemonExpandedStatsDataEntity> {
-        return remote.getPokemonExpandedStats(pokemonNumber)
+    override suspend fun getPokemonExpandedStats(url: String): Flow<PokemonExpandedStatsDataEntity> {
+        return remote.getPokemonExpandedStats(url)
             .map { pokemonExpandedStatsMapper.mapFromRemote(it) }
     }
 }

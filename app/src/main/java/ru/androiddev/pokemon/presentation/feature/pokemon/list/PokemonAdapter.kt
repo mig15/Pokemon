@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.androiddev.pokemon.databinding.ItemPokemonBinding
 
-class PokemonAdapter() : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
+class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
     val data: MutableList<PokemonItem> = mutableListOf()
 

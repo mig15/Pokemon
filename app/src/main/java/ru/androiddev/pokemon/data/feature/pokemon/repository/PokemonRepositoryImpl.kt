@@ -5,7 +5,8 @@ import ru.androiddev.pokemon.data.feature.pokemon.datasource.PokemonCacheDataSou
 import ru.androiddev.pokemon.data.feature.pokemon.datasource.PokemonRemoteDataSource
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonExpandedStatsDataEntity
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
-import ru.androiddev.pokemon.domain.feature.pokemon.repository.PokemonRepository import javax.inject.Inject
+import ru.androiddev.pokemon.domain.feature.pokemon.repository.PokemonRepository
+import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     val pokemonCacheDataSource: PokemonCacheDataSource,
@@ -16,7 +17,7 @@ class PokemonRepositoryImpl @Inject constructor(
         return pokemonRemoteDataSource.getPokemons(limit, offset)
     }
 
-    override suspend fun getPokemonExpandedStats(pokemonNumber: Int): Flow<PokemonExpandedStatsDataEntity> {
-        return pokemonRemoteDataSource.getPokemonExpandedStats(pokemonNumber)
+    override suspend fun getPokemonExpandedStats(url: String): Flow<PokemonExpandedStatsDataEntity> {
+        return pokemonRemoteDataSource.getPokemonExpandedStats(url)
     }
 }

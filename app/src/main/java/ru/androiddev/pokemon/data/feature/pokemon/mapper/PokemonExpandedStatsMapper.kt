@@ -21,7 +21,14 @@ class PokemonExpandedStatsMapper @Inject constructor() :
                     name = item.name,
                     url = item.url
                 )
-            }
+            },
+            sprites = PokemonExpandedStatsDataEntity.Sprite(
+                PokemonExpandedStatsDataEntity.Sprite.Other(
+                    PokemonExpandedStatsDataEntity.Sprite.Other.Home(
+                        remote.sprites?.other?.home?.frontDefault
+                    )
+                )
+            )
         )
     }
 

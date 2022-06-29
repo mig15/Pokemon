@@ -11,7 +11,7 @@ class PokemonCacheDataSource @Inject constructor(): PokemonDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getPokemonExpandedStats(pokemonNumber: Int): Flow<PokemonExpandedStatsDataEntity> {
+    override suspend fun getPokemonExpandedStats(url: String): Flow<PokemonExpandedStatsDataEntity> {
         TODO("Not yet implemented")
     }
 }

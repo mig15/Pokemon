@@ -1,8 +1,11 @@
 package ru.androiddev.pokemon.data.feature.pokemon.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class PokemonExpandedStatsDataEntity(
     val abilities: List<Ability>?,
-    val moves: List<Move>?
+    val moves: List<Move>?,
+    val sprites: Sprite?
     ) {
 
     data class Ability(
@@ -11,7 +14,15 @@ data class PokemonExpandedStatsDataEntity(
     )
 
     data class Move(
-        val name: String,
+        val name: String?,
         val url: String?
     )
+
+    data class Sprite(val other: Other?) {
+
+        data class Other(val home: Home?) {
+
+            data class Home(@SerializedName("front_default") val frontDefault: String?)
+        }
+    }
 }

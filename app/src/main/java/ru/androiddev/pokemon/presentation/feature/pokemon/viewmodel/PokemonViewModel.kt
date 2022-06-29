@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
-import ru.androiddev.pokemon.domain.feature.pokemon.interactor.PokemonRemoteExpandedStatsInteractor
 import ru.androiddev.pokemon.domain.feature.pokemon.interactor.PokemonRemoteInteractor
+import ru.androiddev.pokemon.presentation.MainActivity
 import ru.androiddev.pokemon.presentation.base.BaseViewModel
 import ru.androiddev.pokemon.presentation.feature.pokemon.list.PokemonItem
+import ru.androiddev.pokemon.presentation.feature.pokemon.view.PokemonExpandedStatsFragment
 
 class PokemonViewModel(
-    private val pokemonUseCase: PokemonRemoteInteractor,
-    private val pokemonExpandedStatsUseCase: PokemonRemoteExpandedStatsInteractor
+    private val pokemonUseCase: PokemonRemoteInteractor
 ) : BaseViewModel() {
 
     private var pokemonsJob: Job? = null
@@ -24,7 +24,7 @@ class PokemonViewModel(
 
     fun getPokemons() {
         if ((pokemonsJob?.isActive == false || pokemonsJob == null) && pokemonsRequestOffset < FIRST_GENERATION) {
-            pokemonsJob = viewModelScope.launch {
+            pokemonsJob = viewModelScope.launch(superJob) {
                 pokemonUseCase.execute(
                     params = PokemonRemoteInteractor.Params(
                         limit = POKEMONS_REQUEST_LIMIT,
@@ -50,8 +50,9 @@ class PokemonViewModel(
         return data.results?.map { item ->
             PokemonItem(name = item.name ?: "", url = item.url ?: "")
                 .apply {
-                    onClick = {
-
+                    onClick = { url ->
+                        MainActivity.screenLiveData.value =
+                            PokemonExpandedStatsFragment::class.java.name to url
                     }
                 }
         } ?: emptyList()

@@ -8,6 +8,6 @@ interface PokemonDataSource {
 
     suspend fun getPokemons(limit: Int, offset: Int): Flow<PokemonsListDataEntity>
 
-    suspend fun getPokemonExpandedStats(pokemonNumber: Int): Flow<PokemonExpandedStatsDataEntity>
+    suspend fun getPokemonExpandedStats(url: String): Flow<PokemonExpandedStatsDataEntity>
 
 }

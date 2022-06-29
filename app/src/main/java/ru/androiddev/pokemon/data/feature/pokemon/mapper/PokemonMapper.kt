@@ -2,12 +2,12 @@ package ru.androiddev.pokemon.data.feature.pokemon.mapper
 
 import ru.androiddev.pokemon.data.RemoteMapper
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
-import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsListRemoteEntity
+import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsRemoteListEntity
 import javax.inject.Inject
 
-class PokemonMapper @Inject constructor(): RemoteMapper<PokemonsListRemoteEntity, PokemonsListDataEntity> {
+class PokemonMapper @Inject constructor(): RemoteMapper<PokemonsRemoteListEntity, PokemonsListDataEntity> {
 
-    override fun mapFromRemote(remote: PokemonsListRemoteEntity): PokemonsListDataEntity {
+    override fun mapFromRemote(remote: PokemonsRemoteListEntity): PokemonsListDataEntity {
         return with(remote) {
             PokemonsListDataEntity(
                 count = count,
@@ -23,7 +23,7 @@ class PokemonMapper @Inject constructor(): RemoteMapper<PokemonsListRemoteEntity
         }
     }
 
-    override fun mapToRemote(entity: PokemonsListDataEntity): PokemonsListRemoteEntity {
+    override fun mapToRemote(entity: PokemonsListDataEntity): PokemonsRemoteListEntity {
         TODO("Not yet implemented")
     }
 }

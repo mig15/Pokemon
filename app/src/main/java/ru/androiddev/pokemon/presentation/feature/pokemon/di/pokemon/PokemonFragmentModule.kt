@@ -2,7 +2,6 @@ package ru.androiddev.pokemon.presentation.feature.pokemon.di.pokemon
 
 import dagger.Module
 import dagger.Provides
-import ru.androiddev.pokemon.domain.feature.pokemon.interactor.PokemonRemoteExpandedStatsInteractor
 import ru.androiddev.pokemon.domain.feature.pokemon.interactor.PokemonRemoteInteractor
 import ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel.PokemonViewModelFactory
 
@@ -11,12 +10,10 @@ class PokemonFragmentModule {
 
     @Provides
     fun providePokemonViewModelFactory(
-        pokemonUseCase: PokemonRemoteInteractor,
-        pokemonExpandedStatsUseCase: PokemonRemoteExpandedStatsInteractor
+        pokemonUseCase: PokemonRemoteInteractor
     ): PokemonViewModelFactory {
         return PokemonViewModelFactory(
-            pokemonUseCase = pokemonUseCase,
-            pokemonExpandedStatsUseCase = pokemonExpandedStatsUseCase
+            pokemonUseCase = pokemonUseCase
         )
     }
 }

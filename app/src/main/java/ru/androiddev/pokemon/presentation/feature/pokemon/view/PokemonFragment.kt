@@ -32,7 +32,6 @@ class PokemonFragment : BaseFragment<PokemonViewModelFactory, PokemonViewModel>(
         adapter = PokemonAdapter()
         viewBinding.fragmentPokemonList.adapter = adapter
         viewBinding.fragmentPokemonList.layoutManager = LinearLayoutManager(requireContext())
-
         layoutManager = viewBinding.fragmentPokemonList.layoutManager as LinearLayoutManager
 
         initLiveData()

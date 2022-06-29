@@ -10,8 +10,8 @@ class PokemonRemoteExpandedStatsInteractor @Inject constructor(private val repos
     : BaseInteractor<PokemonExpandedStatsDataEntity, PokemonRemoteExpandedStatsInteractor.Params>() {
 
     override suspend fun executeOnBackground(params: Params): PokemonExpandedStatsDataEntity {
-        return repository.getPokemonExpandedStats(params.pokemonNumber).first()
+        return repository.getPokemonExpandedStats(params.url).first()
     }
 
-    data class Params(val pokemonNumber: Int)
+    data class Params(val url: String)
 }

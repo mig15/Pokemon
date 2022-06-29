@@ -2,10 +2,10 @@ package ru.androiddev.pokemon.remote.service.api
 
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonRemoteExpandedStatsEntity
-import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsListRemoteEntity
+import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsRemoteListEntity
 
 interface PokemonApi {
 
@@ -13,8 +13,8 @@ interface PokemonApi {
     fun getPokemons(
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Flow<PokemonsListRemoteEntity>
+    ): Flow<PokemonsRemoteListEntity>
 
-    @GET("pokemon/{number}")
-    fun getPokemonExpandedStats(@Path ("number") number: Int): Flow<PokemonRemoteExpandedStatsEntity>
+    @GET
+    fun getPokemonExpandedStats(@Url url: String): Flow<PokemonRemoteExpandedStatsEntity>
 }
