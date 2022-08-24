@@ -3,9 +3,10 @@ package ru.androiddev.pokemon.presentation.di.module
 import dagger.Module
 import dagger.Provides
 import ru.androiddev.pokemon.data.feature.pokemon.repository.PokemonRepositoryImpl
-import ru.androiddev.pokemon.data.feature.pokemon.datasource.PokemonCacheDataSource
-import ru.androiddev.pokemon.data.feature.pokemon.datasource.PokemonRemoteDataSource
+import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonExpandedStatsMapper
+import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonMapper
 import ru.androiddev.pokemon.domain.feature.pokemon.repository.PokemonRepository
+import ru.androiddev.pokemon.remote.service.api.PokemonApi
 
 @Module
 class RepositoryModule {
@@ -17,9 +18,10 @@ class RepositoryModule {
 
     @Provides
     fun providePokemonRepositoryImpl(
-        pokemonCacheDataSource: PokemonCacheDataSource,
-        pokemonRemoteDataSource: PokemonRemoteDataSource
+        remote: PokemonApi,
+        mapper: PokemonMapper,
+        pokemonExpandedStatsMapper: PokemonExpandedStatsMapper
     ): PokemonRepositoryImpl {
-        return PokemonRepositoryImpl(pokemonCacheDataSource, pokemonRemoteDataSource)
+        return PokemonRepositoryImpl(remote, mapper, pokemonExpandedStatsMapper)
     }
 }

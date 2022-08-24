@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName
 data class PokemonRemoteExpandedStatsEntity(
     val abilities: List<Ability>?,
     val moves: List<Move>?,
-    val sprites: Sprite?
+    val sprites: Sprite?,
+    val name: String?,
+    val height: Int?,
+    @SerializedName("base_experience") val baseExperience: Int?,
+    val weight: Int?
 ) {
 
     data class Ability(
