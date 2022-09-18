@@ -4,11 +4,11 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
-import ru.androiddev.pokemon.presentation.MyApplication
-import ru.androiddev.pokemon.presentation.di.module.ActivityBindingModule
-import ru.androiddev.pokemon.presentation.di.module.FragmentBindingModule
-import ru.androiddev.pokemon.presentation.di.module.NetworkModule
-import ru.androiddev.pokemon.presentation.di.module.RepositoryModule
+import ru.androiddev.pokemon.presentation.MainApp
+import ru.androiddev.pokemon.presentation.di.modules.ActivityBindingModule
+import ru.androiddev.pokemon.presentation.di.modules.FragmentBindingModule
+import ru.androiddev.pokemon.presentation.di.modules.NetworkModule
+import ru.androiddev.pokemon.presentation.di.modules.RepositoryModule
 
 @Component(modules = [
     NetworkModule::class,
@@ -17,7 +17,7 @@ import ru.androiddev.pokemon.presentation.di.module.RepositoryModule
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
 ])
-interface ApplicationComponent {
+interface AppComponent {
 
     @Component.Builder
     interface Builder {
@@ -25,8 +25,8 @@ interface ApplicationComponent {
         @BindsInstance
         fun context(context: Context): Builder
 
-        fun build(): ApplicationComponent
+        fun build(): AppComponent
     }
 
-    fun inject(app: MyApplication)
+    fun inject(app: MainApp)
 }

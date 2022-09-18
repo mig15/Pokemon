@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.presentation.di.module
+package ru.androiddev.pokemon.presentation.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

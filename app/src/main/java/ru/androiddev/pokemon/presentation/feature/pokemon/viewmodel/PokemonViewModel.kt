@@ -2,7 +2,6 @@ package ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
@@ -24,7 +23,7 @@ class PokemonViewModel(
 
     fun getPokemons() {
         if ((pokemonsJob?.isActive == false || pokemonsJob == null) && pokemonsRequestOffset < FIRST_GENERATION) {
-            pokemonsJob = viewModelScope.launch(superJob) {
+            pokemonsJob = scope.launch {
                 pokemonUseCase.execute(
                     params = PokemonRemoteInteractor.Params(
                         limit = POKEMONS_REQUEST_LIMIT,

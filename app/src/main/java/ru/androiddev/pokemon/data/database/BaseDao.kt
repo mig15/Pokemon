@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.data.db
+package ru.androiddev.pokemon.data.database
 
 import androidx.room.Dao
 import androidx.room.Delete

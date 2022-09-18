@@ -2,7 +2,6 @@ package ru.androiddev.pokemon.presentation.feature.pokemon.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonExpandedStatsDataEntity
@@ -18,7 +17,7 @@ class PokemonExpandedStatsViewModel(
     val itemsLiveData = MutableLiveData<PokemonExpandedStatsDataEntity>()
 
     fun getPokemonExpandedStats(url: String) {
-        pokemonExpandedStatsJob = viewModelScope.launch(superJob) {
+        pokemonExpandedStatsJob = scope.launch {
             pokemonExpandedStatsUseCase.execute(
                 params = PokemonRemoteExpandedStatsInteractor.Params(url),
                 onComplete = {

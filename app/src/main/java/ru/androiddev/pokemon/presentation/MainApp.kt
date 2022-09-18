@@ -6,10 +6,10 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import ru.androiddev.pokemon.presentation.di.DaggerApplicationComponent
+import ru.androiddev.pokemon.presentation.di.DaggerAppComponent
 import javax.inject.Inject
 
-class MyApplication : Application(), HasAndroidInjector, HasSupportFragmentInjector {
+class MainApp : Application(), HasAndroidInjector, HasSupportFragmentInjector {
 
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
     @Inject lateinit var supportFragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -17,7 +17,7 @@ class MyApplication : Application(), HasAndroidInjector, HasSupportFragmentInjec
     override fun onCreate() {
         super.onCreate()
 
-        DaggerApplicationComponent
+        DaggerAppComponent
             .builder()
             .context(applicationContext)
             .build()

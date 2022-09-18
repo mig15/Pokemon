@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.presentation.di.module
+package ru.androiddev.pokemon.presentation.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,5 +9,5 @@ import ru.androiddev.pokemon.presentation.feature.pokemon.di.activity.MainActivi
 abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [(MainActivityModule::class)])
-    abstract fun bindLoginActivity(): MainActivity
+    abstract fun bindMainActivity(): MainActivity
 }

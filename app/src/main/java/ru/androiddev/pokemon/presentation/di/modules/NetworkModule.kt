@@ -1,6 +1,5 @@
-package ru.androiddev.pokemon.presentation.di.module
+package ru.androiddev.pokemon.presentation.di.modules
 
-import android.util.Log
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -8,7 +7,7 @@ import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.androiddev.pokemon.remote.service.api.PokemonApi
+import ru.androiddev.pokemon.remote.service.api.PokemonsApi
 import tech.thdev.network.flowcalladapterfactory.FlowCallAdapterFactory
 
 @Module
@@ -32,10 +31,10 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideApiService(okHttpClientBuilder: OkHttpClient.Builder): PokemonApi {
+    fun provideApiService(okHttpClientBuilder: OkHttpClient.Builder): PokemonsApi {
         return makeRetrofit(
             okHttpClientBuilder.build(),
-            PokemonApi::class.java,
+            PokemonsApi::class.java,
         )
     }
 

@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.remote.feature.pokemon.entity
+package ru.androiddev.pokemon.remote.entity.pokemons
 
 import com.google.gson.annotations.SerializedName
 

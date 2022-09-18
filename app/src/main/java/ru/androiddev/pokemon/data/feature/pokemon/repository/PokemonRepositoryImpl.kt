@@ -7,10 +7,10 @@ import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
 import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonExpandedStatsMapper
 import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonMapper
 import ru.androiddev.pokemon.domain.feature.pokemon.repository.PokemonRepository
-import ru.androiddev.pokemon.remote.service.api.PokemonApi
+import ru.androiddev.pokemon.remote.service.api.PokemonsApi
 
 class PokemonRepositoryImpl(
-    private val remote: PokemonApi,
+    private val remote: PokemonsApi,
     private val mapper: PokemonMapper,
     private val pokemonExpandedStatsMapper: PokemonExpandedStatsMapper
 ) : PokemonRepository {

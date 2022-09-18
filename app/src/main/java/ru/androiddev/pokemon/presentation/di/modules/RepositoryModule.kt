@@ -1,4 +1,4 @@
-package ru.androiddev.pokemon.presentation.di.module
+package ru.androiddev.pokemon.presentation.di.modules
 
 import dagger.Module
 import dagger.Provides
@@ -6,7 +6,7 @@ import ru.androiddev.pokemon.data.feature.pokemon.repository.PokemonRepositoryIm
 import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonExpandedStatsMapper
 import ru.androiddev.pokemon.data.feature.pokemon.mapper.PokemonMapper
 import ru.androiddev.pokemon.domain.feature.pokemon.repository.PokemonRepository
-import ru.androiddev.pokemon.remote.service.api.PokemonApi
+import ru.androiddev.pokemon.remote.service.api.PokemonsApi
 
 @Module
 class RepositoryModule {
@@ -18,7 +18,7 @@ class RepositoryModule {
 
     @Provides
     fun providePokemonRepositoryImpl(
-        remote: PokemonApi,
+        remote: PokemonsApi,
         mapper: PokemonMapper,
         pokemonExpandedStatsMapper: PokemonExpandedStatsMapper
     ): PokemonRepositoryImpl {

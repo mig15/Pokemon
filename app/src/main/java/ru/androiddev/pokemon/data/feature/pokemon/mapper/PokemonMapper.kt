@@ -2,7 +2,7 @@ package ru.androiddev.pokemon.data.feature.pokemon.mapper
 
 import ru.androiddev.pokemon.data.RemoteMapper
 import ru.androiddev.pokemon.data.feature.pokemon.entity.PokemonsListDataEntity
-import ru.androiddev.pokemon.remote.feature.pokemon.entity.PokemonsRemoteListEntity
+import ru.androiddev.pokemon.remote.entity.pokemons.PokemonsRemoteListEntity
 import javax.inject.Inject
 
 class PokemonMapper @Inject constructor(): RemoteMapper<PokemonsRemoteListEntity, PokemonsListDataEntity> {
